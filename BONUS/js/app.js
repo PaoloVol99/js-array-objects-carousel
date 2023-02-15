@@ -85,8 +85,69 @@ firstSlide.classList.add ('active')
 let arrowRight = document.getElementById('arrow-right')
 let arrowLeft = document.getElementById('arrow-left')
 let activeSlideIndex = 0
+let playElement = document.querySelector('.play')
+let playIcon = document.querySelector('.play .fa-play')
+let stopIcon = document.querySelector('.play .fa-stop')
+let previousElement = document.querySelector('.previous')
+previousElement.style.backgroundColor = 'gray'
+let nextElement = document.querySelector('.next')
 
-arrowRight.addEventListener('click', function() {
+arrowRight.addEventListener('click', nextSlide)
+
+arrowLeft.addEventListener('click', previousSlide)
+
+let interval
+let playing = false
+let next = true
+let previous = false
+
+nextElement.addEventListener('click', function() {
+    if (previous === true) {
+        previousElement.style.backgroundColor = 'gray'
+        this.style.backgroundColor = 'rgb(53, 83, 131)'
+        next = true
+        previous = false
+        console.log ('next:', next, 'previous:', previous)
+    }
+})
+
+previousElement.addEventListener('click', function() {
+    if (next === true) {
+        nextElement.style.backgroundColor = 'gray'
+        this.style.backgroundColor = 'rgb(53, 83, 131)'
+        previous = true
+        next = false
+        console.log ('next:', next, 'previous:', previous)
+    }
+})
+
+playElement.addEventListener('click', function() {
+    if (playing === false) {
+        playIcon.style.display = 'none'
+        stopIcon.style.display = 'block'
+        clearInterval(interval)
+        console.log(interval)
+        playing = true
+        if (previous === true) {
+            interval = setInterval(previousSlide, 3000)
+        } else if (next === true ) {
+            interval = setInterval(nextSlide, 3000)
+        }
+    } else {
+        playIcon.style.display = 'block'
+        stopIcon.style.display = 'none'
+        clearInterval(interval)
+        playing = false
+    }
+})
+
+
+
+
+// FUNCTIONS
+
+
+function nextSlide() {
 
     let currentSlide = slideElements[activeSlideIndex]
     let nextSlide = slideElements[activeSlideIndex + 1]
@@ -103,9 +164,10 @@ arrowRight.addEventListener('click', function() {
         activeSlideIndex++
     }
 
-})
+}
 
-arrowLeft.addEventListener('click', function() {
+function previousSlide() {
+    
 
     let currentSlide = slideElements[activeSlideIndex]
     let nextSlide = slideElements[activeSlideIndex - 1]
@@ -122,4 +184,5 @@ arrowLeft.addEventListener('click', function() {
         nextSlide.classList.add('active')
         activeSlideIndex -= 1
     }
-})
+    
+}
