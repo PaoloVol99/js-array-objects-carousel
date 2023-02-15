@@ -102,7 +102,7 @@ let next = true
 let previous = false
 
 nextElement.addEventListener('click', function() {
-    if (previous === true) {
+    if (previous === true  && playing === false) {
         previousElement.style.backgroundColor = 'gray'
         this.style.backgroundColor = 'rgb(53, 83, 131)'
         next = true
@@ -112,7 +112,7 @@ nextElement.addEventListener('click', function() {
 })
 
 previousElement.addEventListener('click', function() {
-    if (next === true) {
+    if (next === true && playing === false) {
         nextElement.style.backgroundColor = 'gray'
         this.style.backgroundColor = 'rgb(53, 83, 131)'
         previous = true
